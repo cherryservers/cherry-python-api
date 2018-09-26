@@ -36,22 +36,65 @@ for plan in plans:
                                                       parse_p['available_regions']))
 ```
 
-### How do I get set up? ###
+#### Get images
+```
+import cherry
+import json
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+master = cherry.Master(auth_token="api_token")
 
-### Contribution guidelines ###
+images = master.get_images("161")
 
-* Writing tests
-* Code review
-* Other guidelines
+for image in images:
+    i = json.dumps(image)
+    parse_i = json.loads(i)
 
-### Who do I talk to? ###
+    print("Image ID: %s -> Image Name: %s" % (parse_i['id'], 
+                                              parse_i['name']))
+```
 
-* Repo owner or admin
-* Other community or team contact
+#### Get projects
+```
+import cherry
+import json
+
+master = cherry.Master(auth_token="api_token")
+
+projects = master.get_projects("28519")
+
+for project in projects:
+    p = json.dumps(project)
+    parse_p = json.loads(p)
+
+    print("Project ID: %s -> Project name: %s" % (parse_p['id'], 
+                                                  parse_p['name']))
+```
+
+#### Get SSH keys
+```
+import cherry
+import json
+
+master = cherry.Master(auth_token="api_token")
+
+keys = master.get_ssh_keys()
+
+for key in keys:
+    print("Key: %s" % key)
+```
+
+#### Get installed servers
+```
+import cherry
+import json
+
+master = cherry.Master(auth_token="api_token")
+
+servers = master.get_servers("79813")
+
+for server in servers:
+    sr = json.dumps(server)
+    parse_sr = json.loads(sr)
+
+    print("Server ID: %s -> IP: %s" % (parse_sr['id'], parse_sr['ip_addresses']))
+```
