@@ -2,11 +2,22 @@
 
 Cherry Servers python API for Cherry Servers RESTful API.
 
-### What is this repository for? ###
+### Examples ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+## Get teams
+```
+import cherry
+import json
+
+master = cherry.Master(auth_token="api_token")
+
+teams = master.get_teams()
+
+for team in teams:
+    t = json.dumps(team)
+    parse_t = json.loads(t)
+    print("Team ID: %s -> Team Name: %s" % (parse_t['id'], parse_t['name']))
+```
 
 ### How do I get set up? ###
 
