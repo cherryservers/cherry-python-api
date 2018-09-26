@@ -98,3 +98,36 @@ for server in servers:
 
     print("Server ID: %s -> IP: %s" % (parse_sr['id'], parse_sr['ip_addresses']))
 ```
+
+#### Order server
+```
+import cherry
+import json
+
+master = cherry.Master(auth_token="api_token")
+
+ips = []
+ssh_keys=['95']
+
+server = master.create_server(project_id="79813", 
+                              name="super-duper",
+                              hostname="bla.com",
+                              image="Ubuntu 16.04 64bit", 
+                              region="EU-East-1",
+                              ip_addresses=ips,
+                              ssh_keys=ssh_keys,
+                              plan_id="161")
+
+print("Server: %s" % server)
+```
+
+#### Terminate server
+```
+import cherry
+import json
+
+master = cherry.Master(auth_token="api_token")
+
+server = master.terminate_server("165760")
+print("Delete server: %s" % server)
+```
