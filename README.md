@@ -31,7 +31,9 @@ plans = master.get_plans("28519")
 for plan in plans:
     p = json.dumps(plan)
     parse_p = json.loads(p)
-    print("Plan id: %s -> Plan name: %s -> Av: %s" % (parse_p['id'], parse_p['name'], parse_p['available_regions']))
+    print("Plan id: %s -> Plan name: %s -> Av: %s" % (parse_p['id'], 
+                                                      parse_p['name'], 
+                                                      parse_p['available_regions']))
 ```
 
 ### How do I get set up? ###
