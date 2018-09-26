@@ -4,7 +4,7 @@ Cherry Servers python API for Cherry Servers RESTful API.
 
 ### Examples ###
 
-## Get teams
+#### Get teams
 ```
 import cherry
 import json
