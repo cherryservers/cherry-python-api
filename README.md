@@ -19,6 +19,21 @@ for team in teams:
     print("Team ID: %s -> Team Name: %s" % (parse_t['id'], parse_t['name']))
 ```
 
+#### Get plans
+```
+import cherry
+import json
+
+master = cherry.Master(auth_token="api_token")
+
+plans = master.get_plans("28519")
+
+for plan in plans:
+    p = json.dumps(plan)
+    parse_p = json.loads(p)
+    print("Plan id: %s -> Plan name: %s -> Av: %s" % (parse_p['id'], parse_p['name'], parse_p['available_regions']))
+```
+
 ### How do I get set up? ###
 
 * Summary of set up
