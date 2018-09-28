@@ -53,13 +53,12 @@ class Master(MainAPI):
         servers = self.call_api('v1/projects/%s/servers' % project_id)
         return servers
  
-    def create_server(self, project_id, name, hostname, image, region, ip_addresses, ssh_keys, plan_id):
+    def create_server(self, project_id, hostname, image, region, ip_addresses, ssh_keys, plan_id):
 
         """ Create server in specified project """
 
         args = {
             "project_id" : project_id,
-            "name" : name,
             "hostname" : hostname,
             "image" : image,
             "region" : region,

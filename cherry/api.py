@@ -42,6 +42,6 @@ class MainAPI(object):
         try:
             resp.raise_for_status()
         except requests.HTTPError as e:
-            raise Exception("Error detected: %s Details: %s" % (e, data))
+            raise Exception("Error detected: %s Details: %s Even more details: %s" % (e, data, json.dumps(args)))
 
         return data
