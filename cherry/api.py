@@ -30,18 +30,25 @@ class MainAPI(object):
             print("URL: %s -> HEADERS: %s -> ARGS: %s" % (api_url, headers, json.dumps(args)))
             resp = requests.post(api_url, headers=headers, data=json.dumps(args))
         elif type == 'DELETE':
-            print("delete")
             resp = requests.delete(api_url, headers=headers)
         elif type == 'PUT':
             print("PUT")
             resp = requests.put(api_url, headers=headers, data=json.dumps(args))
 
-        resp.headers.get("content-type", "").startswith("application/json")
-        data = resp.json()
+        if not resp.content:
+            data = None
+        elif resp.headers.get("content-type", "").startswith("application/json"):
+            try:
+                data = resp.json()
+            except Exception as e:
+                raise Exception("Failed to read json data: %s" % e)
+        else:
+            data = resp.content
 
         try:
-            resp.raise_for_status()
+            if resp.status_code != 404:
+                resp.raise_for_status()
         except requests.HTTPError as e:
-            raise Exception("Error detected: %s Details: %s Even more details: %s" % (e, data, json.dumps(args)))
+            raise Exception("Error detected: %s Details: %s More details: %s" % (e, data, json.dumps(args)))
 
         return data

@@ -1,0 +1,13 @@
+- name: Cherry Servers API module
+  connection: local
+  hosts: localhost
+  tasks:
+  - name: Remove CherryServers server
+    cherryservers_server:
+      project_id: '79813'
+      server_id: '166052'
+      state: absent
+    register: testout
+  - name: dump test output
+    debug:
+      msg: '{{ testout }}'

@@ -99,6 +99,18 @@ for server in servers:
     print("Server ID: %s -> IP: %s" % (parse_sr['id'], parse_sr['ip_addresses']))
 ```
 
+### Get specific server info 
+```
+import cherry
+import json
+
+master = cherry.Master(auth_token="api_token")
+
+server = master.get_server("165903")
+
+print(server)
+```
+
 #### Order server
 ```
 import cherry

@@ -53,6 +53,13 @@ class Master(MainAPI):
         servers = self.call_api('v1/projects/%s/servers' % project_id)
         return servers
  
+    def get_server(self, server_id):
+
+        """ Get single server info """
+
+        server = self.call_api('v1/servers/%s' % server_id)
+        return server
+
     def create_server(self, project_id, hostname, image, region, ip_addresses, ssh_keys, plan_id):
 
         """ Create server in specified project """
