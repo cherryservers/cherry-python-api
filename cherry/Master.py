@@ -60,7 +60,14 @@ class Master(MainAPI):
         server = self.call_api('v1/servers/%s' % server_id)
         return server
 
-    def create_server(self, project_id, hostname, image, region, ip_addresses, ssh_keys, plan_id):
+    def create_server(self, 
+                      project_id, 
+                      hostname, 
+                      image, 
+                      region, 
+                      ip_addresses, 
+                      ssh_keys, 
+                      plan_id):
 
         """ Create server in specified project """
 
@@ -154,3 +161,69 @@ class Master(MainAPI):
 
         key = self.call_api('v1/ssh-keys/%s' % ssh_key_id, type='DELETE')
         return key
+
+    def get_ip_addresses(self, project_id):
+
+        """ Get all project`s ips available """
+
+        ips = self.call_api('v1/projects/%s/ips' % project_id)
+        return ips
+
+    def get_ip_address(self, project_id, ip_address_id):
+
+        """ Get specific IP """
+
+        ip = self.call_api('v1/projects/%s/ips/%s' % (project_id, ip_address_id))
+        return ip
+
+    def create_ip_address(self, 
+                          project_id,
+                          ip_type,
+                          region, 
+                          ptr_record, 
+                          a_record, 
+                          routed_to, 
+                          assigned_to):
+
+        """ Orders additional ip address """
+
+        args = {
+            "type" : ip_type,
+            "region" : region,
+            "ptr_record" : ptr_record,
+            "a_record" : a_record,
+            "routed_to" : routed_to,
+            "assigned_to" : assigned_to
+        }
+
+        ip = self.call_api('v1/projects/%s/ips' % project_id, type='POST', args=args)
+        return ip
+
+    def update_ip_address(self, 
+                          project_id, 
+                          ip_address_id, 
+                          ptr_record, 
+                          a_record, 
+                          routed_to, 
+                          assigned_to):
+
+        """ Update IP address info """
+
+        args = {
+            "ptr_record" : ptr_record,
+            "a_record" : a_record,
+            "routed_to" : routed_to,
+            "assigned_to" : assigned_to
+        }
+
+        ip = self.call_api('v1/projects/%s/ips/%s' % (project_id, ip_address_id), type='PUT', args=args)
+        return ip
+
+    def remove_ip_address(self, project_id, ip_address_id):
+
+        """
+        Removes IP address
+        """
+
+        ip = self.call_api('v1/projects/%s/ips/%s' % (project_id, ip_address_id), type='DELETE')
+        return ip
