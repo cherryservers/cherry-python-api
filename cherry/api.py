@@ -27,12 +27,10 @@ class MainAPI(object):
         if type == 'GET':
             resp = requests.get(api_url, headers=headers)
         elif type == 'POST':
-            print("URL: %s -> HEADERS: %s -> ARGS: %s" % (api_url, headers, json.dumps(args)))
             resp = requests.post(api_url, headers=headers, data=json.dumps(args))
         elif type == 'DELETE':
             resp = requests.delete(api_url, headers=headers)
         elif type == 'PUT':
-            print("PUT")
             resp = requests.put(api_url, headers=headers, data=json.dumps(args))
 
         if not resp.content:
