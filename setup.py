@@ -9,4 +9,16 @@ setup(name='cherry',
       license='LGPL v3',
       packages=['cherry'],
       install_requires='requests',
-      zip_safe=False)
+      classifiers=[
+            'Development Status :: 5 - Production/Stable',
+            'Intended Audience :: Developers',
+            'Intended Audience :: Information Technology',
+            'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
+            'Programming Language :: Python :: 2',
+            'Programming Language :: Python :: 2.7',
+            'Programming Language :: Python :: 3',
+            'Programming Language :: Python :: 3.4',
+            'Programming Language :: Python :: 3.5',
+            'Programming Language :: Python :: 3.6'
+    ]
+)

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from .api import MainAPI
-from .Server import Server
 
 
 class Master(MainAPI):
