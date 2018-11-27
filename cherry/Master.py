@@ -81,7 +81,8 @@ class Master(MainAPI):
             "plan_id" : plan_id
         }
 
-        server = self.call_api('v1/projects/%s/servers' % project_id, type='POST', args=args)
+        server = self.call_api('v1/projects/%s/servers' 
+            % project_id, type='POST', args=args)
         return server
 
     def terminate_server(self, server_id):
@@ -99,7 +100,8 @@ class Master(MainAPI):
             "type" : "reboot"
         }
 
-        server = self.call_api('v1/servers/%s/actions' % server_id, type='POST', args=args)
+        server = self.call_api('v1/servers/%s/actions' 
+            % server_id, type='POST', args=args)
         return server
 
     def poweron_server(self, server_id):
@@ -110,7 +112,8 @@ class Master(MainAPI):
             "type" : "power_on"
         }
 
-        server = self.call_api('v1/servers/%s/actions' % server_id, type='POST', args=args)
+        server = self.call_api('v1/servers/%s/actions' 
+            % server_id, type='POST', args=args)
         return server
 
     def poweroff_server(self, server_id):
@@ -121,7 +124,8 @@ class Master(MainAPI):
             "type" : "power_off"
         }
 
-        server = self.call_api('v1/servers/%s/actions' % server_id, type='POST', args=args)
+        server = self.call_api('v1/servers/%s/actions' 
+            % server_id, type='POST', args=args)
         return server
 
     def get_ssh_keys(self):
@@ -152,7 +156,8 @@ class Master(MainAPI):
             "key" : ssh_key
         }
 
-        key = self.call_api('v1/ssh-keys/%s' % ssh_key_id, type='PUT', args=args)
+        key = self.call_api('v1/ssh-keys/%s' 
+            % ssh_key_id, type='PUT', args=args)
         return key
 
     def delete_ssh_key(self, ssh_key_id):
@@ -173,7 +178,8 @@ class Master(MainAPI):
 
         """ Get specific IP """
 
-        ip = self.call_api('v1/projects/%s/ips/%s' % (project_id, ip_address_id))
+        ip = self.call_api('v1/projects/%s/ips/%s' 
+            % (project_id, ip_address_id))
         return ip
 
     def create_ip_address(self, 
@@ -196,7 +202,8 @@ class Master(MainAPI):
             "assigned_to" : assigned_to
         }
 
-        ip = self.call_api('v1/projects/%s/ips' % project_id, type='POST', args=args)
+        ip = self.call_api('v1/projects/%s/ips' 
+            % project_id, type='POST', args=args)
         return ip
 
     def update_ip_address(self, 
@@ -216,7 +223,8 @@ class Master(MainAPI):
             "assigned_to" : assigned_to
         }
 
-        ip = self.call_api('v1/projects/%s/ips/%s' % (project_id, ip_address_id), type='PUT', args=args)
+        ip = self.call_api('v1/projects/%s/ips/%s' 
+            % (project_id, ip_address_id), type='PUT', args=args)
         return ip
 
     def remove_ip_address(self, project_id, ip_address_id):
@@ -225,5 +233,6 @@ class Master(MainAPI):
         Removes IP address
         """
 
-        ip = self.call_api('v1/projects/%s/ips/%s' % (project_id, ip_address_id), type='DELETE')
+        ip = self.call_api('v1/projects/%s/ips/%s' 
+            % (project_id, ip_address_id), type='DELETE')
         return ip

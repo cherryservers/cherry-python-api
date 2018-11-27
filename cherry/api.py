@@ -47,6 +47,7 @@ class MainAPI(object):
             if resp.status_code != 404 and resp.status_code != 400:
                 resp.raise_for_status()
         except requests.HTTPError as e:
-            raise Exception("Error detected: %s Details: %s More details: %s" % (e, data, json.dumps(args)))
+            raise Exception("Error detected: %s Details: %s More details: %s" 
+                % (e, data, json.dumps(args)))
 
         return data
