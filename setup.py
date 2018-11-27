@@ -1,8 +1,13 @@
 from setuptools import setup
 
+with open('README.md') as readme:
+    long_description = readme.read()
+
 setup(name='cherry-python',
-      version='0.1',
+      version='0.1.4',
       description='Cherry Servers API client',
+      long_description=long_description,
+      long_description_content_type='text/markdown',
       url='https://bitbucket.org/cherryservers/cherry-python-api',
       author='Aarturas Razinskij',
       author_email='arturas.razinskij@cherryservers.com',
