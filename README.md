@@ -2,6 +2,14 @@
 
 Cherry Servers python API for Cherry Servers RESTful API.
 
+Installation
+------------
+The Cherry Servers api python lybrary should be installed by pip:
+
+````
+pip install cherry-python
+````
+
 ### Examples ###
 
 #### Get teams
