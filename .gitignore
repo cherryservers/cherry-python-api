@@ -5,3 +5,6 @@
 start.py
 *.retry
 playbooks/*
+build/
+*.egg-info/
+dist/

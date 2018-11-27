@@ -1,6 +1,6 @@
 from setuptools import setup
 
-setup(name='cherry',
+setup(name='cherry-python',
       version='0.1',
       description='Cherry Servers API client',
       url='https://bitbucket.org/cherryservers/cherry-python-api',
