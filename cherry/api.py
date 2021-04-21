@@ -25,6 +25,7 @@ class MainAPI(object):
         }
 
         if type == 'GET':
+            api_url += self._parse_params(args)
             resp = requests.get(api_url, headers=headers)
         elif type == 'POST':
             resp = requests.post(api_url, headers=headers, data=json.dumps(args))
@@ -47,7 +48,18 @@ class MainAPI(object):
             if resp.status_code != 404 and resp.status_code != 400:
                 resp.raise_for_status()
         except requests.HTTPError as e:
-            raise Exception("Error detected: %s Details: %s More details: %s" 
+            raise Exception("Error detected: %s Details: %s More details: %s"
                 % (e, data, json.dumps(args)))
 
         return data
+
+    def update_args(self, args, updates):
+        args = args.copy() if isinstance(args, dict) else json.dumps(args)
+        args.update(updates)
+        return args
+
+    def _parse_params(self, params):
+        vals = list()
+        for k, v in params.items():
+            vals.append(str("%s=%s" % (k, v)))
+        return "?" + "&".join(vals)
