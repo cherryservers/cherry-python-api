@@ -4,7 +4,7 @@ with open('README.md') as readme:
     long_description = readme.read()
 
 setup(name='cherry-python',
-      version='0.1.4',
+      version='0.2',
       description='Cherry Servers API client',
       long_description=long_description,
       long_description_content_type='text/markdown',

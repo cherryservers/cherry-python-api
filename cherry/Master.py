@@ -17,221 +17,296 @@ class Master(MainAPI):
         ''' Cia nustatom pagal nutylejima tipus '''
         return super(Master, self).call_api(method, type, args)
 
-    def get_teams(self, args={}):
+    def get_teams(self, **kwargs):
+        """ Get teams ID for further requests
+        Link: https://api.cherryservers.com/doc/#operation/get-teams
+        """
 
-        """ Get teams ID for further requests """
+        args = self.update_args(kwargs, {})
+        return self.call_api('v1/teams', args=args)
 
-        cmd = self.call_api('v1/teams', args=args)
-        return cmd
+    def get_plans(self, team_id, **kwargs):
+        """ Get available plans for specified team
+        Link: https://api.cherryservers.com/doc/#operation/get-team-plans
+        """
 
-    def get_plans(self, team_id):
+        args = self.update_args(kwargs, {})
+        return self.call_api('v1/teams/%s/plans' % team_id, args=args)
 
-        """ Get available plans for specified team """
+    def get_images(self, plan_id, **kwargs):
+        """ List supported distributions for specified plan
+        Link: https://api.cherryservers.com/doc/#operation/get-plan-images
+        """
 
-        plans = self.call_api('v1/teams/%s/plans' % team_id)
-        return plans
-
-    def get_images(self, plan_id):
-
-        """ List supported distributions for specified plan """
-
-        images = self.call_api('v1/plans/%s/images' % plan_id)
-        return images
+        args = self.update_args(kwargs, {})
+        return self.call_api('v1/plans/%s/images' % plan_id, args=args)
     
-    def get_projects(self, team_id):
+    def get_projects(self, team_id, **kwargs):
+        """ Get projects for team
+        Link: https://api.cherryservers.com/doc/#operation/get-team-projects
+        """
 
-        """ Get projects for team """
+        args = self.update_args(kwargs, {})
+        return self.call_api('v1/teams/%s/projects' % team_id, args=args)
 
-        projects = self.call_api('v1/teams/%s/projects' % team_id)
-        return projects
+    def get_servers(self, project_id, **kwargs):
+        """ Get servers for project
+        Link: https://api.cherryservers.com/doc/#operation/get-project-servers
+        """
 
-    def get_servers(self, project_id):
-
-        """ Get servers for project """
-
-        servers = self.call_api('v1/projects/%s/servers' % project_id)
-        return servers
+        args = self.update_args(kwargs, {})
+        return self.call_api('v1/projects/%s/servers' % project_id, args=args)
  
-    def get_server(self, server_id):
+    def get_server(self, server_id, **kwargs):
+        """ Get single server info
+        Link: https://api.cherryservers.com/doc/#operation/get-server
+        """
 
-        """ Get single server info """
+        args = self.update_args(kwargs, {})
+        return self.call_api('v1/servers/%s' % server_id, args=args)
 
-        server = self.call_api('v1/servers/%s' % server_id)
-        return server
+    def create_server(self, project_id, region, plan_id, **kwargs):
+        """ Create server in specified project
+        Link: https://api.cherryservers.com/doc/#operation/deploy-server
+        """
 
-    def create_server(self, 
-                      project_id, 
-                      hostname, 
-                      image, 
-                      region, 
-                      ip_addresses, 
-                      ssh_keys, 
-                      plan_id):
+        args = self.update_args(kwargs, {
+            "project_id": project_id,
+            "region": region,
+            "plan_id": plan_id
+        })
 
-        """ Create server in specified project """
-
-        args = {
-            "project_id" : project_id,
-            "hostname" : hostname,
-            "image" : image,
-            "region" : region,
-            "ip_addresses" : ip_addresses,
-            "ssh_keys" : ssh_keys,
-            "plan_id" : plan_id
-        }
-
-        server = self.call_api('v1/projects/%s/servers' 
+        return self.call_api('v1/projects/%s/servers'
             % project_id, type='POST', args=args)
-        return server
 
     def terminate_server(self, server_id):
+        """ Terminated server by ID
+        Link: https://api.cherryservers.com/doc/#operation/terminate-server
+        """
 
-        """ Terminated server by ID """
-
-        server = self.call_api('v1/servers/%s' % server_id, type='DELETE')
-        return server
+        return self.call_api('v1/servers/%s' % server_id, type='DELETE')
 
     def reboot_server(self, server_id):
-
-        """ Reboot server by ID """
+        """ Reboot server by ID
+        Link: https://api.cherryservers.com/doc/#operation/perform-server-action
+        """
 
         args = {
-            "type" : "reboot"
+            "type": "reboot"
         }
 
-        server = self.call_api('v1/servers/%s/actions' 
+        return self.call_api('v1/servers/%s/actions'
             % server_id, type='POST', args=args)
-        return server
 
     def poweron_server(self, server_id):
-
-        """ Power on server by ID """
+        """ Power on server by ID
+        Link: https://api.cherryservers.com/doc/#operation/perform-server-action
+        """
 
         args = {
-            "type" : "power_on"
+            "type": "power_on"
         }
 
-        server = self.call_api('v1/servers/%s/actions' 
+        return self.call_api('v1/servers/%s/actions'
             % server_id, type='POST', args=args)
-        return server
 
     def poweroff_server(self, server_id):
-
-        """ Power off server by ID """
+        """ Power off server by ID
+        Link: https://api.cherryservers.com/doc/#operation/perform-server-action
+        """
 
         args = {
-            "type" : "power_off"
+            "type": "power_off"
         }
 
-        server = self.call_api('v1/servers/%s/actions' 
+        return self.call_api('v1/servers/%s/actions'
             % server_id, type='POST', args=args)
-        return server
 
-    def get_ssh_keys(self):
+    def get_ssh_keys(self, **kwargs):
+        """ List SSH keys
+        Link: https://api.stage.cherryservers.com/doc/#operation/get-ssh-keys
+        """
 
-        """ List SSH keys """
-
-        ssh_keys = self.call_api('v1/ssh-keys')
-        return ssh_keys
+        args = self.update_args(kwargs, {})
+        return self.call_api('v1/ssh-keys', args=args)
 
     def create_ssh_key(self, label, ssh_key):
-
-        """ Adds new ssh key """
-
-        args = {
-            "label" : label,
-            "key" : ssh_key
-        }
-
-        key = self.call_api('v1/ssh-keys', type='POST', args=args)
-        return key
-
-    def update_ssh_keys(self, ssh_key_id, label, ssh_key):
-
-        """ Updates ssh key """
+        """ Adds new ssh key
+        Link: https://api.cherryservers.com/doc/#operation/create-ssh-key
+        """
 
         args = {
-            "label" : label,
-            "key" : ssh_key
+            "label": label,
+            "key": ssh_key
         }
 
-        key = self.call_api('v1/ssh-keys/%s' 
+        return self.call_api('v1/ssh-keys', type='POST', args=args)
+
+    def update_ssh_keys(self, ssh_key_id, **kwargs):
+        """ Updates ssh key
+        Link: https://api.cherryservers.com/doc/#operation/update-ssh-key
+        """
+
+        args = self.update_args(kwargs, {})
+
+        return self.call_api('v1/ssh-keys/%s'
             % ssh_key_id, type='PUT', args=args)
-        return key
 
     def delete_ssh_key(self, ssh_key_id):
+        """ Removes ssh key
+        Link: https://api.cherryservers.com/doc/#operation/delete-ssh-key
+        """
 
-        """ Removes ssh key """
+        return self.call_api('v1/ssh-keys/%s' % ssh_key_id, type='DELETE')
 
-        key = self.call_api('v1/ssh-keys/%s' % ssh_key_id, type='DELETE')
-        return key
+    def get_ip_addresses(self, project_id, **kwargs):
+        """ Get all project`s ips available
+        Link: https://api.cherryservers.com/doc/#operation/get-ip-addresses
+        """
 
-    def get_ip_addresses(self, project_id):
+        args = self.update_args(kwargs, {})
+        return self.call_api('v1/projects/%s/ips' % project_id, args=args)
 
-        """ Get all project`s ips available """
+    def get_ip_address(self, project_id, ip_address_id, **kwargs):
+        """ Get specific IP
+        Link: https://api.cherryservers.com/doc/#operation/get-ip-address
+        """
 
-        ips = self.call_api('v1/projects/%s/ips' % project_id)
-        return ips
+        args = self.update_args(kwargs, {})
+        return self.call_api('v1/projects/%s/ips/%s'
+            % (project_id, ip_address_id), args=args)
 
-    def get_ip_address(self, project_id, ip_address_id):
+    def create_ip_address(self, project_id, region, **kwargs):
+        """ Orders additional ip address
+        Link: https://api.stage.cherryservers.com/doc/#operation/request-ip-address
+        """
 
-        """ Get specific IP """
+        args = self.update_args(kwargs, {
+            "region": region
+        })
 
-        ip = self.call_api('v1/projects/%s/ips/%s' 
-            % (project_id, ip_address_id))
-        return ip
-
-    def create_ip_address(self, 
-                          project_id,
-                          ip_type,
-                          region, 
-                          ptr_record, 
-                          a_record, 
-                          routed_to, 
-                          assigned_to):
-
-        """ Orders additional ip address """
-
-        args = {
-            "type" : ip_type,
-            "region" : region,
-            "ptr_record" : ptr_record,
-            "a_record" : a_record,
-            "routed_to" : routed_to,
-            "assigned_to" : assigned_to
-        }
-
-        ip = self.call_api('v1/projects/%s/ips' 
+        return self.call_api('v1/projects/%s/ips'
             % project_id, type='POST', args=args)
-        return ip
 
-    def update_ip_address(self, 
-                          project_id, 
-                          ip_address_id, 
-                          ptr_record, 
-                          a_record, 
-                          routed_to, 
-                          assigned_to):
+    def update_ip_address(self, project_id, ip_address_id, **kwargs):
+        """ Update IP address info
+        Link: https://api.stage.cherryservers.com/doc/#operation/update-ip-address
+        """
 
-        """ Update IP address info """
-
-        args = {
-            "ptr_record" : ptr_record,
-            "a_record" : a_record,
-            "routed_to" : routed_to,
-            "assigned_to" : assigned_to
-        }
-
-        ip = self.call_api('v1/projects/%s/ips/%s' 
+        args = self.update_args(kwargs, {})
+        return self.call_api('v1/projects/%s/ips/%s'
             % (project_id, ip_address_id), type='PUT', args=args)
-        return ip
 
     def remove_ip_address(self, project_id, ip_address_id):
-
+        """ Removes IP address
+        Link: https://api.stage.cherryservers.com/doc/#operation/delete-ip-address
         """
-        Removes IP address
-        """
 
-        ip = self.call_api('v1/projects/%s/ips/%s' 
+        return self.call_api('v1/projects/%s/ips/%s'
             % (project_id, ip_address_id), type='DELETE')
-        return ip
+
+    def get_ip_subnets(self, project_id, **kwargs):
+        """ Get all project`s subnets
+        Link: https://api.cherryservers.com/doc/#operation/get-project-subnets
+        """
+
+        args = self.update_args(kwargs, {})
+        return self.call_api('v1/projects/%s/subnets' % project_id, args=args)
+
+    def get_ip_subnet(self, project_id, subnet_id, **kwargs):
+        """ Get specific IP subnet
+        Link: https://api.cherryservers.com/doc/#operation/get-subnet
+        """
+
+        args = self.update_args(kwargs, {})
+        return self.call_api('v1/projects/%s/subnets/%s'
+            % (project_id, subnet_id), args=args)
+
+    def create_ip_subnet(self, project_id, region, quantity, **kwargs):
+        """ Orders additional IP subnet
+        Link: https://api.cherryservers.com/doc/#operation/request-subnet
+        """
+
+        args = self.update_args(kwargs, {
+            "region": region,
+            "quantity": quantity
+        })
+
+        return self.call_api('v1/projects/%s/subnets'
+            % project_id, type='POST', args=args)
+
+    def remove_ip_subnet(self, project_id, subnet_id):
+        """ Removes IP subnet
+        Link: https://api.cherryservers.com/doc/#operation/delete-subnet
+        """
+
+        return self.call_api('v1/projects/%s/subnets/%s'
+            % (project_id, subnet_id), type='DELETE')
+
+    def get_storage_volumes(self, project_id, **kwargs):
+        """ Get all project`s storage volumes
+        Link: https://api.cherryservers.com/doc/#operation/get-project-storages
+        """
+
+        args = self.update_args(kwargs, {})
+        return self.call_api('v1/projects/%s/storages' % project_id, args=args)
+
+    def get_storage_volume(self, project_id, storage_id, **kwargs):
+        """ Get specific storage volume
+        Link: https://api.cherryservers.com/doc/#operation/get-storage
+        """
+
+        args = self.update_args(kwargs, {})
+        return self.call_api('v1/projects/%s/storages/%s'
+            % (project_id, storage_id), args=args)
+
+    def create_storage_volume(self, project_id, region, size, **kwargs):
+        """ Orders storage volume
+        Link: https://api.cherryservers.com/doc/#operation/request-storage
+        """
+
+        args = self.update_args(kwargs, {
+            "region": region,
+            "size": size
+        })
+
+        return self.call_api('v1/projects/%s/storages'
+            % project_id, type='POST', args=args)
+
+    def update_storage_volume(self, project_id, storage_id, **kwargs):
+        """ Update storage volume
+        Link: https://api.cherryservers.com/doc/#operation/resize-storage
+        """
+
+        args = self.update_args(kwargs, {})
+        return self.call_api('v1/projects/%s/storages/%s'
+            % (project_id, storage_id), type='PUT', args=args)
+
+    def attach_storage_volume(self, project_id, storage_id, server_id, **kwargs):
+        """ Attach storage volume to an existing server
+        Link: https://api.cherryservers.com/doc/#operation/attach-storage
+        """
+
+        args = self.update_args(kwargs, {
+            "attach_to": server_id
+        })
+
+        return self.call_api('v1/projects/%s/storages/%s/attachments'
+                             % (project_id, storage_id), type='POST', args=args)
+
+    def detach_storage_volume(self, project_id, storage_id, **kwargs):
+        """ Detach storage volume from a server
+        Link: https://api.cherryservers.com/doc/#operation/deatach-storage
+        """
+
+        args = self.update_args(kwargs, {})
+        return self.call_api('v1/projects/%s/storages/%s/attachments'
+                             % (project_id, storage_id), type='DELETE', args=args)
+
+    def remove_storage_volume(self, project_id, storage_id):
+        """ Removes storage volume from project
+        Link: https://api.cherryservers.com/doc/#operation/delete-storage
+        """
+
+        return self.call_api('v1/projects/%s/storages/%s'
+            % (project_id, storage_id), type='DELETE')
