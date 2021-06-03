@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import json
-import logging
 import requests
+from . import __version__
 
 class MainAPI(object):
 
@@ -16,12 +16,16 @@ class MainAPI(object):
     def call_api(self, method, type='GET', args=None):
 
         api_url = 'https://' + self.api_url + '/' + method
-
         token_header = 'Bearer ' + self.auth_token
+        agent = "{0}/{1} {2}/{3}".format('cherry-python',
+                                         __version__,
+                                         requests.__name__,
+                                         requests.__version__)
 
         headers = {
             'Authorization': token_header,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'User-Agent': agent
         }
 
         if type == 'GET':

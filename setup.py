@@ -4,11 +4,18 @@ with open('README.md') as readme:
     long_description = readme.read()
 
 setup(name='cherry-python',
+      maintainer="Cherry Servers Developers",
+      maintainer_email="support@cherryservers.com",
       version='0.2',
       description='Cherry Servers API client',
       long_description=long_description,
       long_description_content_type='text/markdown',
-      url='https://bitbucket.org/cherryservers/cherry-python-api',
+      url='https://www.cherryservers.com',
+      download_url="https://pypi.org/project/cherry-python/#files",
+      project_urls={
+          "Bug Tracker": "https://github.com/cherryservers/cherry-python-api/issues",
+          "Source Code": "https://github.com/cherryservers/cherry-python-api",
+      },
       author='Arturas Razinskij',
       author_email='arturas.razinskij@cherryservers.com',
       license='LGPL v3',
