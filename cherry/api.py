@@ -8,16 +8,17 @@ class MainAPI(object):
 
     """ Main class for API call """
 
-    def __init__(self, auth_token):
+    def __init__(self, auth_token, user_agent=""):
 
         self.auth_token = auth_token
         self.api_url = "api.cherryservers.com"
+        self.user_agent_prefix = user_agent
 
     def call_api(self, method, type='GET', args=None):
 
         api_url = 'https://' + self.api_url + '/' + method
         token_header = 'Bearer ' + self.auth_token
-        agent = "{0}/{1} {2}/{3}".format('cherry-python',
+        agent = "{0}cherry-python/{1} {2}/{3}".format(self.user_agent_prefix,
                                          __version__,
                                          requests.__name__,
                                          requests.__version__)
