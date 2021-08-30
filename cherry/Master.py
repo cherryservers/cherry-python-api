@@ -7,10 +7,11 @@ class Master(MainAPI):
 
     """ Main class for API managament """
 
-    def __init__(self, auth_token):
+    def __init__(self, auth_token, user_agent=""):
 
         self.auth_token = auth_token
         self.api_url = "api.cherryservers.com"
+        self.user_agent_prefix = user_agent
 
     def call_api(self, method, type='GET', args=None):
 
