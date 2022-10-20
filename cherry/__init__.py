@@ -2,7 +2,7 @@
 
 """Cherry Servers API library"""
 
-__version__ = "0.2.1"
+__version__ = "0.3.0"
 __author__ = "Arturas Razinskij"
 __author_email__ = "arturas.razinskij@cherryservers.com"
 __license__ = "LGPL v3"
