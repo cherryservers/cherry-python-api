@@ -8,11 +8,12 @@ class MainAPI(object):
 
     """ Main class for API call """
 
-    def __init__(self, auth_token, user_agent=""):
+    def __init__(self, auth_token, user_agent="", debug=None):
 
         self.auth_token = auth_token
         self.api_url = "api.cherryservers.com"
         self.user_agent_prefix = user_agent
+        self.debug_cherry = debug
 
     def call_api(self, method, type='GET', args=None):
 
@@ -28,6 +29,10 @@ class MainAPI(object):
             'Content-Type': 'application/json',
             'User-Agent': agent
         }
+
+        if self.debug:
+            print('Request data:')
+            print(json.dumps(args, indent=2))
 
         if type == 'GET':
             api_url += self._parse_params(args)

@@ -7,11 +7,12 @@ class Master(MainAPI):
 
     """ Main class for API managament """
 
-    def __init__(self, auth_token, user_agent=""):
+    def __init__(self, auth_token, user_agent="", debug=None):
 
         self.auth_token = auth_token
         self.api_url = "api.cherryservers.com"
         self.user_agent_prefix = user_agent
+        self.debug = debug
 
     def call_api(self, method, type='GET', args=None):
 
@@ -311,3 +312,67 @@ class Master(MainAPI):
 
         return self.call_api('v1/projects/%s/storages/%s'
             % (project_id, storage_id), type='DELETE')
+
+    def get_backup_storage_plans(self, **kwargs):
+        """ Get available backup storage plans
+        Link: https://api.cherryservers.com/doc/#tag/Backup-Storage/operation/get-backup-plans
+        """
+        args = self.update_args(kwargs, {})
+        return self.call_api('v1/backup-storage-plans', type='GET', args=args)
+
+    def get_backup_storages(self, project_id, **kwargs):
+        """ Get all project`s backup storages
+        Link: https://api.cherryservers.com/doc/#tag/Backup-Storage/operation/get-backup-storages
+        """
+
+        args = self.update_args(kwargs, {})
+        return self.call_api('v1/projects/%s/backup-storages' 
+            % project_id, args=args)
+
+    def get_backup_storage(self, backup_id, **kwargs):
+        """ Get specific backup storage
+        Link: https://api.cherryservers.com/doc/#tag/Backup-Storage/operation/get-backup-storage
+        """
+
+        args = self.update_args(kwargs, {})
+        return self.call_api('v1/backup-storages/%s'
+            % backup_id, args=args)
+
+    def create_backup_storage_volume(self, server_id, backup_plan, region, **kwargs):
+        """ Request backup storage for a server
+        Link: https://api.cherryservers.com/doc/#tag/Backup-Storage/operation/post-backup-storages
+        """
+
+        args = self.update_args(kwargs, {
+            "slug": backup_plan,
+            "region": region
+        })
+
+        return self.call_api('v1/servers/%s/backup-storages'
+            % server_id, type='POST', args=args)
+
+    def update_backup_storage(self, backup_id, **kwargs):
+        """ Update backup storage
+        Link: https://api.cherryservers.com/doc/#tag/Backup-Storage/operation/put-backup
+        """
+
+        args = self.update_args(kwargs, {})
+        return self.call_api('v1/backup-storages/%s'
+            % backup_id, type='PUT', args=args)
+
+    def remove_backup_storage(self, backup_id):
+        """ Removes backup storage from project and server
+        Link: https://api.cherryservers.com/doc/#tag/Backup-Storage/operation/delete-backup-storage
+        """
+
+        return self.call_api('v1/backup-storages/%s'
+            % backup_id, type='DELETE')
+
+    def update_backup_storage_method(self, backup_id, method_name, **kwargs):
+        """ Disable or enable access method and update it's ACL's
+        Link: https://api.cherryservers.com/doc/#tag/Backup-Storage/operation/patch-backup-methods
+        """
+
+        args = self.update_args(kwargs, {})
+        return self.call_api('v1/backup-storages/%s/methods/%s'
+            % (backup_id, method_name), type='PATCH', args=args)

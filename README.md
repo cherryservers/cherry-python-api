@@ -286,3 +286,30 @@ storage = master.update_storage_volume(project_id=46776, storage_id=377457, size
 
 print("Storage size upgraded")
 ```
+
+#### Get backup plans
+```
+import cherry
+import json
+
+master = cherry.Master(auth_token="api_token")
+plans = master.get_backup_storage_plans()
+
+for plan in plans:
+    p = json.dumps(plan)
+    parse_p = json.loads(p)
+    print("Plan slug: %s -> Plan size: %s GB -> Available regions: %s" % (parse_p['slug'], 
+                                                      parse_p['size_gigabytes'], 
+                                                      ' '.join([i['slug'] for i in parse_p['regions']])))
+```
+
+#### Request backup storage for a server
+```
+import cherry
+import json
+
+master = cherry.Master(auth_token="api_token")
+backup = master.create_backup_storage_volume(server_id=112223344, backup_plan="backup_100", region="eu_nord_1")
+
+print("Backup: %s" % backup)
+```
