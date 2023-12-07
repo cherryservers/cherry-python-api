@@ -6,7 +6,7 @@ with open('README.md') as readme:
 setup(name='cherry-python',
       maintainer="Cherry Servers Developers",
       maintainer_email="support@cherryservers.com",
-      version='0.3.1',
+      version='0.3.2',
       description='Cherry Servers API client',
       long_description=long_description,
       long_description_content_type='text/markdown',
