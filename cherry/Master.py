@@ -42,7 +42,7 @@ class Master(MainAPI):
 
         args = self.update_args(kwargs, {})
         return self.call_api('v1/plans/%s/images' % plan_id, args=args)
-    
+
     def get_projects(self, team_id, **kwargs):
         """ Get projects for team
         Link: https://api.cherryservers.com/doc/#operation/get-team-projects
@@ -58,7 +58,7 @@ class Master(MainAPI):
 
         args = self.update_args(kwargs, {})
         return self.call_api('v1/projects/%s/servers' % project_id, args=args)
- 
+
     def get_server(self, server_id, **kwargs):
         """ Get single server info
         Link: https://api.cherryservers.com/doc/#operation/get-server
@@ -87,6 +87,18 @@ class Master(MainAPI):
         """
 
         return self.call_api('v1/servers/%s' % server_id, type='DELETE')
+
+    def rebuild_server(self, server_id, **kwargs):
+        """ Reboot server by ID
+        Link: https://api.cherryservers.com/doc/#operation/perform-server-action
+        """
+
+        args = self.update_args(kwargs, {
+            "type": "rebuild"
+        })
+
+        return self.call_api('v1/servers/%s/actions'
+            % server_id, type='POST', args=args)
 
     def reboot_server(self, server_id):
         """ Reboot server by ID
